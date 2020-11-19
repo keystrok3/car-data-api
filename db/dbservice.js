@@ -35,7 +35,7 @@ function getData() {
             data[i].Weight, data[i].Acceleration, data[i].Model, data[i].Origin);
     }
 }
-/** THE FUNCTION BELOW HAS ALREADY SERVED ITS PURPOSE: POPULATING THE DATABASE */
+/** THE FUNCTION CALL BELOW HAS ALREADY SERVED ITS PURPOSE: POPULATING THE DATABASE */
 // getData();
 
 //Get all cars by name
