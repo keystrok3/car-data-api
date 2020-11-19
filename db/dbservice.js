@@ -5,14 +5,10 @@ require('dotenv').config();
 const mysql = require('mysql');
 
 const db = mysql.createConnection({
-    // user: process.env.USER,
-    user: 'root',
-    // host: process.env.HOST,
-    host: 'localhost',
-    // database: process.env.DATABASE,
-    database: 'carDB',
-    // password: process.env.PASSWORD,
-    password: 'veritas'
+    user: process.env.USER,
+    host: process.env.HOST,
+    database: process.env.DATABASE,
+    password: process.env.PASSWORD,
 });
 
 db.connect((error) => {
