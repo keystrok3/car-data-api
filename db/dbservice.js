@@ -5,10 +5,14 @@ require('dotenv').config();
 const mysql = require('mysql');
 
 const db = mysql.createConnection({
-    user: process.env.USER,
-    host: process.env.HOST,
-    database: process.env.DATABASE,
-    password: process.env.PASSWORD,
+    // user: process.env.USER,
+    // host: process.env.HOST,
+    // database: process.env.DATABASE,
+    // password: process.env.PASSWORD,
+    user: 'root',
+    host: 'localhost',
+    database: 'carDB',
+    password: 'veritas'
 });
 
 db.connect((error) => {
@@ -35,8 +39,10 @@ function getData() {
             data[i].Weight, data[i].Acceleration, data[i].Model, data[i].Origin);
     }
 }
+
 /** THE FUNCTION CALL BELOW HAS ALREADY SERVED ITS PURPOSE: POPULATING THE DATABASE */
 // getData();
+
 
 //Get all cars by name
 const getCarsByName = function() {
@@ -49,4 +55,48 @@ const getCarsByName = function() {
     });
 };
 
-module.exports = { getCarsByName };
+//Find a specific car by name
+const find_a_car = function(carName) {
+    return new Promise((resolve, reject) => {
+        let query = 'SELECT * FROM cars WHERE car_name = ?;';
+        db.query(query, [carName], (err, results) => {
+            if(err) reject(err);
+            resolve(results);
+        });
+    });
+};
+
+// Find by coutry of origon
+const findByOrigin = function(origin) {
+    return new Promise((resolve, reject) => {
+        let query = 'SELECT * FROM cars WHERE origin = ?;';
+        db.query(query, [origin], (err, results) => {
+            if(err) reject(err);
+            resolve(results);
+        });
+    });
+};
+
+// Get total number of cars
+const getTotal = function() {
+    return new Promise((resolve, reject) => {
+        let query = 'SELECT COUNT(car_id) AS totalCars FROM cars;';
+        db.query(query, (err, results) => {
+            if(err) reject(err);
+            resolve(results);
+        });
+    });
+}
+
+// Get total number of cars from a specific country
+const getTotalFromCountry = function(origin) {
+    return new Promise((resolve, reject) => {
+        let query = 'SELECT COUNT(car_id) AS totalFromOrigin FROM cars WHERE origin = ?;';
+        db.query(query, [origin], (err, results) => {
+            if(err) reject(err);
+            resolve(results)
+        });
+    });
+};
+
+module.exports = { getCarsByName, find_a_car, findByOrigin, getTotal, getTotalFromCountry };
