@@ -44,8 +44,8 @@ app.get('/originproportion/:origin', async (req, res) => {
     try {
         let total = await db.getTotal();
         let totalFromOrigin = await db.getTotalFromCountry(origin);
-        console.log((totalFromOrigin[0].totalFromOrigin / total[0].totalCars)*100);
-        res.send();
+        let carProportion = (totalFromOrigin[0].totalFromOrigin / total[0].totalCars)*100;
+        res.send(carProportion);
     } catch (error) {
         console.error(error);
         res.sendStatus(500);
